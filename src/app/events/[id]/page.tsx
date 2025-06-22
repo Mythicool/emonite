@@ -6,13 +6,14 @@ import { events } from '@/data/events'
 import { formatDate } from '@/lib/utils'
 
 interface EventPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default function EventPage({ params }: EventPageProps) {
-  const event = events.find(e => e.id === params.id)
+export default async function EventPage({ params }: EventPageProps) {
+  const { id } = await params
+  const event = events.find(e => e.id === id)
 
   if (!event) {
     notFound()
